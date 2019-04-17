@@ -13,13 +13,14 @@ pipeline {
         }
         stage('Testing') {
             steps {
-                sh 'npm test'
+                //sh 'npm test'
             }
         }
         stage('Publishing') {
             steps {
                 echo 'zipping artifact'
-                echo 'publishing to s3 bucket'
+                sh 'tar -czf /tmp/ssfdata.tar.gz .'
+                //echo 'publishing to s3 bucket'
             }
         }
         stage('Terraform') {
