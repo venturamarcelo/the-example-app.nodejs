@@ -2,24 +2,34 @@ pipeline {
     agent any
     
     tools {nodejs "node"} // Requires NodeJS plugin and a node version called "node"
-    
+    // 
+
     stages {
-        stage('Build') {
+        stage('Installing') {
             steps {
-                echo 'Building..'
                 sh 'node -v'
                 sh 'npm install'
-
             }
         }
-        stage('Test') {
+        stage('Testing') {
             steps {
-                echo 'Testing...'
+                sh 'npm test'
+            }
+        }
+        stage('Publishing') {
+            steps {
+                echo 'zipping artifact'
+                echo 'publishing to s3 bucket'
+            }
+        }
+        stage('Terraform') {
+            steps {
+                echo 'creating new Elastic Beanstalk version'
             }
         }
         stage('Deploy') {
-            steps {
-                echo 'Deploying...'
+            steps{
+                echo 'eb deploy...'
             }
         }
     }
