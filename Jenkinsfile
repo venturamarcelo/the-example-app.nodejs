@@ -7,16 +7,17 @@ pipeline {
                 echo 'Building..'
                 sh 'node -v'
                 sh 'npm install'
+
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
+                echo 'Testing...'
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                echo 'Deploying...'
             }
         }
     }
