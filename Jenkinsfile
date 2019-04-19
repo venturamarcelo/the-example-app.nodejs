@@ -28,6 +28,8 @@ pipeline {
         stage('Terraform') {
             steps {
                 echo 'creating new Elastic Beanstalk version'
+                sh 'terraform init'
+                sh 'terraform apply'
             }
         }
         stage('Deploy') {
