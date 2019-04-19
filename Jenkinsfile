@@ -22,7 +22,7 @@ pipeline {
                 echo 'zipping artifact'
                 sh 'tar -czf /tmp/ssfdata.tar.gz .'
                 echo 'publishing to s3 bucket'
-                sh 'aws s3 cp /tmp/ssfdata.tar.gz s3://gene-repository/ssfdata.tar.gz'
+                sh 'aws s3 cp /tmp/ssfdata.tar.gz s3://ssfdata/ssfdata.tar.gz'
             }
         }
         stage('Terraform') {
