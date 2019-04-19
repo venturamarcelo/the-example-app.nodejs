@@ -30,10 +30,9 @@ resource "aws_s3_bucket_object" "bucketObject" {
   bucket = "${aws_s3_bucket.bucket.id}"
 
   # The name of the object once it is in the bucket.
-  key = ""
-
+  key = "ssfdata.zip"
   # The path to a file that will be read and uploaded as raw bytes for the object content.
-  source = ""
+  source = "ssfdata.zip"
 }
 
 # Create a Beanstalk Application Version that can be deployed to a Beanstalk Environment.
