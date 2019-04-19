@@ -29,7 +29,7 @@ pipeline {
             steps {
                 echo 'creating new Elastic Beanstalk version'
                 sh 'terraform init'
-                sh 'terraform apply'
+                sh 'terraform apply -auto-approve'
             }
         }
         stage('Deploy') {

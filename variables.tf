@@ -11,17 +11,17 @@ variable "stack_name" {
 }
 
 variable "dev_env" {
-  default     = "dev_env"
+  default     = "dev-env"
   description = "Development environment"
 }
 
 variable "qa_env" {
-  default     = "qa_env"
+  default     = "qa-env"
   description = "QA environment"
 }
 
 variable "prod_env" {
-  default     = "prod_env"
+  default     = "prod-env"
   description = "Production environment"
 }
 
