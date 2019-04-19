@@ -25,21 +25,11 @@ resource "aws_s3_bucket" "bucket" {
   bucket = "${var.bucket}"
 }
 
-# Provides a S3 bucket object resource.
-resource "aws_s3_bucket_object" "bucketObject" {
-  bucket = "${aws_s3_bucket.bucket.id}"
-
-  # The name of the object once it is in the bucket.
-  key = "ssfdata.zip"
-  # The path to a file that will be read and uploaded as raw bytes for the object content.
-  source = "ssfdata.zip"
-}
-
 # Create a Beanstalk Application Version that can be deployed to a Beanstalk Environment.
 resource "aws_elastic_beanstalk_application_version" "ssfdataV1" {
   name        = "ssfdataV1"
   application = "${aws_elastic_beanstalk_application.ssfdata.id}"
   description = "application version created by terraform"
   bucket      = "${aws_s3_bucket.bucket.id}"
-  key         = "${aws_s3_bucket_object.bucketObject.id}"
+  key         = "ssfdata.tar.gz"
 }
