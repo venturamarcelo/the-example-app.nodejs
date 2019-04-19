@@ -180,5 +180,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Terraform
+.terraform/
 
 # End of https://www.gitignore.io/api/vim,code,linux,macos,windows,sublimetext,node
