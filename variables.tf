@@ -34,3 +34,8 @@ variable "bucket" {
   default     = "ssfdata"
   description = "AWS S3 bucket name"
 }
+
+variable "version" {
+  description = "Elastic Beanstalk Version number"
+}
+

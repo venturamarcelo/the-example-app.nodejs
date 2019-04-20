@@ -22,14 +22,14 @@ pipeline {
                 echo 'zipping artifact'
                 sh 'tar -czf /tmp/ssfdata.tar.gz .'
                 echo 'publishing to s3 bucket'
-                sh 'aws s3 cp /tmp/ssfdata.tar.gz s3://ssfdata/ssfdata.tar.gz'
+                sh "aws s3 cp /tmp/ssfdata.tar.gz s3://ssfdata/ssfdata-v${env.BUILD_ID}.tar.gz"
             }
         }
         stage('Terraform') {
             steps {
                 echo 'creating new Elastic Beanstalk version'
                 sh 'terraform init'
-                sh 'terraform apply -auto-approve'
+                sh "terraform apply -var version=${env.BUILD_ID} -auto-approve"
             }
         }
         stage('Deploy') {
