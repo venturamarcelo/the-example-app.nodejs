@@ -35,9 +35,9 @@ pipeline {
         stage('Deploy dev') {
             steps{
                 echo 'eb deploy...'
-                sh 'eb init --region us-west-1 ssfdata' //{parameter}
+                sh 'eb init --platform node.js --region us-west-1 ssfdata' //{parameter}
                 // eb deploy <environment_name> --version <version_label>
-                sh 'eb deploy dev-env --version ssfdata-v${env.BUILD_ID} --platform node.js'
+                sh "eb deploy dev-env --version ssfdata-v${env.BUILD_ID}"
 
             }
         }
