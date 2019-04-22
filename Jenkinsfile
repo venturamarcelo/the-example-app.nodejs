@@ -20,9 +20,9 @@ pipeline {
         stage('Publish Artifact') {
             steps {
                 echo 'zipping artifact'
-                sh 'tar -czf /tmp/ssfdata.tar.gz .'
+                sh 'zip -r /tmp/ssfdata.zip .'
                 echo 'publishing to s3 bucket'
-                sh "aws s3 cp /tmp/ssfdata.tar.gz s3://ssfdata/ssfdata-v${env.BUILD_ID}.tar.gz" //{parameter}
+                sh "aws s3 cp /tmp/ssfdata.zip s3://ssfdata/ssfdata-v${env.BUILD_ID}.zip" //{parameter}
             }
         }
         stage('TF Versioning') {
