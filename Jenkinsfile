@@ -35,9 +35,9 @@ pipeline {
         stage('Deploy dev') {
             steps{
                 echo 'eb deploy...'
-                // eb init --region us-west-1 ssfdata {parameter}
+                sh 'eb init --region us-west-1 ssfdata' //{parameter}
                 // eb deploy <environment_name> --version <version_label>
-                // eb deploy dev-env --version ssfdata-v${env.BUILD_ID}
+                sh 'eb deploy dev-env --version ssfdata-v${env.BUILD_ID}'
 
             }
         }
