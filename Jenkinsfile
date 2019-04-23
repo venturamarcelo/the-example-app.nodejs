@@ -53,6 +53,7 @@ pipeline {
                 }
                 
             steps {
+                sh "terraform apply -var version=${env.BUILD_ID} -var app_name=${app_name} -var region=${aws_region} -var bucket=${pkg_bucket} -var dev_env=${env_dev} -var qa_env=${env_qa} -var prod_env=${env_prod} -auto-approve"
                 sh "eb deploy ${env_qa} --version ssfdata-v${env.BUILD_ID}"
             }
         }
@@ -62,6 +63,7 @@ pipeline {
                 }
                 
             steps {
+                sh "terraform apply -var version=${env.BUILD_ID} -var app_name=${app_name} -var region=${aws_region} -var bucket=${pkg_bucket} -var dev_env=${env_dev} -var qa_env=${env_qa} -var prod_env=${env_prod} -auto-approve"
                 sh "eb deploy ${env_prod} --version ssfdata-v${env.BUILD_ID}"
             }
         }
