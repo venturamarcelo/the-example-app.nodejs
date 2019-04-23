@@ -14,8 +14,18 @@ resource "aws_elastic_beanstalk_configuration_template" "tf_template" {
 }
 
 # Create ELastic Beanstalk environment like: development, integration, or production.
-resource "aws_elastic_beanstalk_environment" "tfenvtest" {
+resource "aws_elastic_beanstalk_environment" "dev-env" {
   name          = "${var.dev_env}"
+  application   = "${aws_elastic_beanstalk_application.ssfdata.name}"
+  template_name = "${aws_elastic_beanstalk_configuration_template.tf_template.name}"
+}
+resource "aws_elastic_beanstalk_environment" "qa-env" {
+  name          = "${var.qa_env}"
+  application   = "${aws_elastic_beanstalk_application.ssfdata.name}"
+  template_name = "${aws_elastic_beanstalk_configuration_template.tf_template.name}"
+}
+resource "aws_elastic_beanstalk_environment" "prod-env" {
+  name          = "${var.prod_env}"
   application   = "${aws_elastic_beanstalk_application.ssfdata.name}"
   template_name = "${aws_elastic_beanstalk_configuration_template.tf_template.name}"
 }
