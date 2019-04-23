@@ -38,7 +38,12 @@ pipeline {
                 sh 'eb init --platform node.js --region us-west-1 ssfdata' //{parameter}
                 // eb deploy <environment_name> --version <version_label>
                 sh "eb deploy dev-env --version ssfdata-v${env.BUILD_ID}"
-
+            }
+        }
+        stage('Deploy QA'){
+            input 'Do you approve promotion to QA?'
+            node {
+                sh "eb deploy qa-env --version ssfdata-v${env.BUILD_ID}"
             }
         }
     }
