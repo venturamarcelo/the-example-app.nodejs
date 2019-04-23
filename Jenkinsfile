@@ -1,3 +1,11 @@
+def app_name = 'ssfdata'            // Elastic Beanstalk app name
+def aws_region = 'us-west-1'        // AWS Region
+def pkg_file = '/tmp/ssfdata.zip'   // Package file name
+def pkg_bucket = 'ssfdata'          // S3 package bucket name
+def env_dev = 'dev-env'             // Elastic Beanstalk env name for Dev
+def env_qa = 'qa-env'               // Elastic Beanstalk env name for QA
+def env_prod = 'prod-env'           // Elastic Beanstalk env name for Prod
+
 pipeline {
     agent any
     
@@ -20,24 +28,23 @@ pipeline {
         stage('Publish Artifact') {
             steps {
                 echo 'zipping artifact'
-                sh 'zip -r /tmp/ssfdata.zip .'
+                sh "zip -r ${pkg_file} ."
                 echo 'publishing to s3 bucket'
-                sh "aws s3 cp /tmp/ssfdata.zip s3://ssfdata/ssfdata-v${env.BUILD_ID}.zip" //{parameter}
+                sh "aws s3 cp ${pkg_file} s3://${pkg_bucket}/${app_name}-v${env.BUILD_ID}.zip"
             }
         }
         stage('TF Versioning') {
             steps {
                 echo 'creating new Elastic Beanstalk version'
                 sh 'terraform init'
-                sh "terraform apply -var version=${env.BUILD_ID} -auto-approve"
+                sh "terraform apply -var version=${env.BUILD_ID} -var app_name=${app_name} -var region=${aws_region} -var bucket=${pkg_bucket} -var dev_env=${env_dev} -var qa_env=${env_qa} -var prod_env=${env_prod} -auto-approve"
             }
         }
-        stage('Deploy dev') {
+        stage('Deploy Dev') {
             steps{
                 echo 'eb deploy...'
-                sh 'eb init --platform node.js --region us-west-1 ssfdata' //{parameter}
-                // eb deploy <environment_name> --version <version_label>
-                sh "eb deploy dev-env --version ssfdata-v${env.BUILD_ID}"
+                sh "eb init --platform node.js --region ${aws_region} ${app_name}"
+                sh "eb deploy ${env_dev} --version ssfdata-v${env.BUILD_ID}"
             }
         }
         stage('Deploy QA'){
@@ -46,7 +53,16 @@ pipeline {
                 }
                 
             steps {
-                sh "eb deploy qa-env --version ssfdata-v${env.BUILD_ID}"
+                sh "eb deploy ${env_qa} --version ssfdata-v${env.BUILD_ID}"
+            }
+        }
+        stage('Deploy Prod'){
+            input {
+                message 'Do you approve promotion to Prod?'
+                }
+                
+            steps {
+                sh "eb deploy ${env_prod} --version ssfdata-v${env.BUILD_ID}"
             }
         }
     }
