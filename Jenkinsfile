@@ -41,8 +41,11 @@ pipeline {
             }
         }
         stage('Deploy QA'){
-            input 'Do you approve promotion to QA?'
-            node {
+            input {
+                message 'Do you approve promotion to QA?'
+                }
+                
+            steps {
                 sh "eb deploy qa-env --version ssfdata-v${env.BUILD_ID}"
             }
         }
