@@ -31,7 +31,7 @@ variable "region" {
 }
 
 variable "bucket" {
-  default     = "ssfdata"
+  default     = "ssfdata-pkg"
   description = "AWS S3 bucket name"
 }
 

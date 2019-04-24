@@ -35,11 +35,3 @@ resource "aws_s3_bucket" "bucket" {
   bucket = "${var.bucket}"
 }
 
-# Create a Beanstalk Application Version that can be deployed to a Beanstalk Environment.
-/* resource "aws_elastic_beanstalk_application_version" "ssfdataV1" {
-  name        = "ssfdata-v${var.version}"
-  application = "${aws_elastic_beanstalk_application.ssfdata.id}"
-  description = "application version created by terraform"
-  bucket      = "${aws_s3_bucket.bucket.id}"
-  key         = "ssfdata-v${var.version}.zip"
-} */
