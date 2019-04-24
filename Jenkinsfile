@@ -1,7 +1,7 @@
 def app_name = 'ssfdata'            // Elastic Beanstalk app name
 def aws_region = 'us-west-1'        // AWS Region
 def pkg_file = '/tmp/ssfdata.zip'   // Package file name
-def pkg_bucket = 'ssfdata'          // S3 package bucket name
+def pkg_bucket = 'ssfdata-pkgs'          // S3 package bucket name
 def env_dev = 'dev-env'             // Elastic Beanstalk env name for Dev
 def env_qa = 'qa-env'               // Elastic Beanstalk env name for QA
 def env_prod = 'prod-env'           // Elastic Beanstalk env name for Prod
